@@ -6,5 +6,3 @@ main: [![CI](https://github.com/Masimaka/SelfEdu/actions/workflows/CI.yml/badge.
 
 learn/github-actions: [![github-actions](https://github.com/Masimaka/SelfEdu/workflows/CI/badge.svg?branch=learn/github-actions)](https://github.com/Masimaka/SelfEdu/actions/workflows/CI.yml)
 
-<!--START_SECTION:badges-->
-<!--END_SECTION:badges-->
