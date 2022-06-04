@@ -4,7 +4,9 @@ name: CI
 env:
   APPLICATION_NAME : "MyApps"
   PACKAGE_NAME     : "MyApps-ver-${{ github.sha }}"
-  CREDLY_USER      : "maksim-rusetski"
+  #CREDLY_USER      : "maksim-rusetski"
+  CREDLY_USER      : "Maksim Rusetski"
+  
 
 # Controls when the workflow will run
 on:
