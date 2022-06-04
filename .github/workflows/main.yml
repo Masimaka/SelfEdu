@@ -45,8 +45,14 @@ jobs:
     runs-on: ubuntu-20.04
     needs: [ build ]
     steps:
+      - name: List current folder befor Checkout
+        run : ls -la
+
       - name: Checkout
         uses: actions/checkout@v3
+      
+      - name: List current folder after Checkout
+        run : ls -la
 
       - name: Print Hello world
         run : echo "Hello world from my_deploy"
