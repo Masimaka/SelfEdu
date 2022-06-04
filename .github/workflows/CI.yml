@@ -12,6 +12,8 @@ on:
     branches:    
       - 'main'
       - 'learn/**'
+    paths-ignore:
+      - ./README.md
 
   pull_request:
     branches: [ "main" ]
