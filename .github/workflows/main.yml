@@ -44,3 +44,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Print Hello world
+        run: echo "Hello world from my_deploy"
