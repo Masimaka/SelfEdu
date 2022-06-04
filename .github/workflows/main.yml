@@ -23,6 +23,8 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   build:
+    env: 
+      BUILD_VAR_1: "job level variable"
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -41,6 +43,13 @@ jobs:
           echo Add other actions to build,
           echo test, and deploy your project.
 
+      - name: Print variables
+        env: 
+          LOCAL_VAR: "Super local var"
+        run: |
+          echo "BUILD_VAR_1 is ${{ env.BUILD_VAR_1 }}" 
+          echo "BUILD_VAR_1 is $LOCAL_VAR" 
+          
   my_deploy:
     runs-on: ubuntu-20.04
     needs: [ build ]
