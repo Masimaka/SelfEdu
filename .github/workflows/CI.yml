@@ -80,7 +80,7 @@ jobs:
         uses: pemtajo/badge-readme@2.3.0
         with:
           # GitHub access token with Repo scope # default is ${{ github.token }}
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
           # Your GitHub repository # optional, default is ${{ github.repository }}
           REPOSITORY: ${{ github.repository }}
           # Add a commit message of your choice
