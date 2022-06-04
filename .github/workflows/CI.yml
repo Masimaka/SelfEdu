@@ -4,6 +4,7 @@ name: CI
 env:
   APPLICATION_NAME : "MyApps"
   PACKAGE_NAME     : "MyApps-ver-${{ github.sha }}"
+  CREDLY_USER      : "maksim-rusetski"
 
 # Controls when the workflow will run
 on:
@@ -85,7 +86,7 @@ jobs:
           # Add a commit message of your choice
           #COMMIT_MESSAGE: # optional, default is Updated README with new badges
           # User name used in Credly # optional, default is ${{ github.actor }}
-          CREDLY_USER: ${{ github.actor }}
+          CREDLY_USER: ${{ env.CREDLY_USER }}
           # The sort type for return credly badges [RECENT/POPULAR] # optional, default is 
           CREDLY_SORT: RECENT
           # Defines the badge dimension.# optional, default is 110
