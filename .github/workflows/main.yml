@@ -9,7 +9,7 @@ on:
 
     branches: 
       - main
-      - 'learn/*'
+      - 'learn/**'
 
   pull_request:
     branches: [ "main" ]
