@@ -95,5 +95,5 @@ jobs:
       #    NUMBER_LAST_BADGES: 0
       - name: Badges - Readme
         uses: pemtajo/badge-readme@main
-          with:
-            CREDLY_USER: ${{ env.CREDLY_USER }}
+        with:
+          CREDLY_USER: ${{ env.CREDLY_USER }}
