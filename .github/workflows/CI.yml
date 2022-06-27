@@ -50,6 +50,9 @@ jobs:
       
       - name: Script update chrome version
         run: |
+          sudo apt-get update
+          sudo apt-get upgrade google-chrome-stable -y
+
           CHROME_VERSION=$(google-chrome --product-version)
           CHROME_VERSION=${CHROME_VERSION%.*}
 
