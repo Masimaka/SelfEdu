@@ -45,9 +45,35 @@ jobs:
           chromedriver --version
           
       # Update chromedriver
-      - name: Update chromedriver
-        uses: nanasess/setup-chromedriver@v1
+      #- name: Update chromedriver
+      #  uses: nanasess/setup-chromedriver@v1
       
+      - name: Script update chrome version
+        run: |
+          CHROME_VERSION=$(google-chrome --product-version)
+          CHROME_VERSION=${CHROME_VERSION%.*}
+
+          # Determine latest release of chromedriver
+          # Compatibility of Google Chrome and Chromedriver: https://sites.google.com/a/chromium.org/chromedriver/downloads/version-selection
+          LATEST_CHROMEDRIVER_VERSION=$(curl "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
+
+          # Download and unpack latest release of chromedriver
+          echo "Downloading chromedriver v$LATEST_CHROMEDRIVER_VERSION..."
+          wget "https://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
+          unzip chromedriver_linux64.zip
+          rm chromedriver_linux64.zip
+
+          CHROMEDRIVER_DIR="/usr/local/share/chrome_driver"
+          CHROMEDRIVER_BIN="$CHROMEDRIVER_DIR/chromedriver"
+
+          sudo rm -rf $CHROMEDRIVER_DIR/*
+          sudo rm -rf $CHROMEDRIVER_BIN/*
+
+          sudo mkdir -p $CHROMEDRIVER_DIR
+          sudo mv "chromedriver" $CHROMEDRIVER_BIN
+          sudo chmod +x $CHROMEDRIVER_BIN
+          chromedriver --version
+
       # Runs a single command using the runners shell
       - name: output variable after Update chromedriver
         run: |
