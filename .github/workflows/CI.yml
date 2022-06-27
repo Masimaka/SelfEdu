@@ -45,10 +45,15 @@ jobs:
           chromedriver --version
           
       # Update chromedriver
-      - name: Update chromedriver
-        uses: nanasess/setup-chromedriver@v1
-        with:
-          chromedriver-version: '103.0.5060.53'
+      #- name: Update chromedriver
+      #  uses: nanasess/setup-chromedriver@v1
+      #  with:
+      #    chromedriver-version: '103.0.5060.53'
+          
+      - name: Script update chrome version
+        run: |
+          sudo apt-get update
+          sudo apt-get --only-upgrade install google-chrome-stable
       
       #- name: Script update chrome version
       #  run: |
