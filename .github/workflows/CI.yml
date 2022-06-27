@@ -47,6 +47,13 @@ jobs:
       # Update chromedriver
       - name: Update chromedriver
         uses: nanasess/setup-chromedriver@v1
+      
+      # Runs a single command using the runners shell
+      - name: output variable after Update chromedriver
+        run: |
+          CHROME_VERSION=$(google-chrome --product-version)
+          echo $CHROME_VERSION
+          chromedriver --version
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
