@@ -1,4 +1,14 @@
-on: [push]
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches:    
+      - 'main'
+      - 'learn/**'
+    paths-ignore:
+      - '**/README.md'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 name: AzureLoginSample
 
@@ -12,22 +22,29 @@ jobs:
           creds: '${{ secrets.AZURE_CREDENTIALS }}'
           enable-AzPSSession: true 
       
-      - name: 'Run Azure CLI commands'
-        run: |
-          az account show
-          az group list
-          pwd
+      #- name: 'Run Azure CLI commands'
+      #  run: |
+      #    az account show
+      #    az group list
+      #    pwd
+      
+      #- name: Azure PowerShell Action
+      #  uses: Azure/powershell@v1
+      #  with:
+      #    inlineScript: Get-AzResourceGroup
+      #    azPSVersion: "latest"
       
       - name: Azure PowerShell Action
         uses: Azure/powershell@v1
         with:
-          inlineScript: Get-AzResourceGroup
+          inlineScript: Start-AzVM -ResourceGroupName "sandbox" -Name "testgitactions"
           azPSVersion: "latest"
+      
           
-      - name: Azure CLI script
-        uses: Azure/CLI@v1
-        with:
-          azcliversion: 2.0.72
-          inlineScript: |
-              az account show
-              az storage -h
+      #- name: Azure CLI script
+      #  uses: Azure/CLI@v1
+      #  with:
+      #    azcliversion: 2.0.72
+      #    inlineScript: |
+      #        az account show
+      #        az storage -h
