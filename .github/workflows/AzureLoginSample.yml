@@ -70,6 +70,6 @@ jobs:
       - name: Azure PowerShell Action
         uses: Azure/powershell@v1
         with:
-          inlineScript: Stop-AzVM -ResourceGroupName "sandbox" -Name "testgitactions"
+          inlineScript: Stop-AzVM -ResourceGroupName "sandbox" -Name "testgitactions" -Force
           azPSVersion: "latest"
 
