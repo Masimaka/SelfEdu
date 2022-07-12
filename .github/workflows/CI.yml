@@ -74,3 +74,10 @@ jobs:
           echo "Application name is ${{ env.APPLICATION_NAME }}" 
           echo "Package name is ${{ env.PACKAGE_NAME }}"
       
+      - name: PowerShell
+        shell: pwsh
+        run: |
+          write-output "hello, line1"
+          write-output "hello, line2"
+          #Set-PSRepository PSGallery -InstallationPolicy Trusted
+          #Install-Module SqlServer, PSScriptAnalyzer
