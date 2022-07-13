@@ -54,10 +54,10 @@ jobs:
     runs-on: self-hosted
     needs: [ StartVM ]
     steps:
-      - name: Run a multi-line script
-        run: |
-          write-output "hello from $env:computername",
-          az -v
+      #- name: Run a multi-line script
+      #  run: |
+      #    write-output "hello from $env:computername",
+      #    az -v
       
       - name: PowerShell
         shell: powershell
@@ -71,7 +71,7 @@ jobs:
         uses: azure/login@v1
         with:
           creds: '${{ secrets.AZURE_CREDENTIALS_2 }}'
-          enable-AzPSSession: true
+          #enable-AzPSSession: true
       
       - name: 'Run Azure CLI commands'
         run: |
