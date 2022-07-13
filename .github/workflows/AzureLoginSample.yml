@@ -60,7 +60,8 @@ jobs:
           az -v
       
       - name: PowerShell
-        shell: pwsh
+        shell: powershell
+        #shell: pwsh
         run: |
           write-output "hello, line1"
           write-output "hello, line2"
