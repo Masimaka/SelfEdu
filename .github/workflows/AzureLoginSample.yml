@@ -71,7 +71,7 @@ jobs:
         uses: azure/login@v1
         with:
           creds: '${{ secrets.AZURE_CREDENTIALS_2 }}'
-          #enable-AzPSSession: true
+          enable-AzPSSession: true
       
       - name: 'Run Azure CLI commands'
         run: |
