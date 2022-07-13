@@ -57,7 +57,7 @@ jobs:
       - name: Run a multi-line script
         run: |
           write-output "hello from $env:computername",
-          $PWD
+          az -v
       
       - name: Log in with Azure
         uses: azure/login@v1
