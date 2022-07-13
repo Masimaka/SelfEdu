@@ -72,7 +72,7 @@ jobs:
           pwd
           
   StopVM:
-    if: (${{ env.STOP_VM }} == true)
+    if: ${{ ${{env.STOP_VM }} == true }}
     runs-on: ubuntu-latest
     needs: [ my_deploy ]
     steps:
