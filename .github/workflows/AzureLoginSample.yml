@@ -65,6 +65,7 @@ jobs:
         run: |
           write-output "hello, line1"
           write-output "hello, line2"
+          az -v
           
       - name: Log in with Azure
         uses: azure/login@v1
