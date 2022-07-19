@@ -1,0 +1,31 @@
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  workflow_dispatch:
+
+name: TerraformStart
+env:
+  STOP_VM : false
+
+jobs:
+  job_1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'simple task job_1'
+        run: |
+          echo "Hello world"
+
+      - name: Log in with Azure
+        uses: azure/login@v1
+        with:
+          creds: '${{ secrets.AZURE_CREDENTIALS_2 }}'
+          enable-AzPSSession: true 
+      
+  
+  job_2:
+    runs-on: ubuntu-latest
+    needs: [ job_1 ]
+    steps:
+      - name: 'simple task job_2'
+        run: |
+          echo "Hello world"
+      
