@@ -1,5 +1,9 @@
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches:    
+      - 'feature/terraform-**'
+  # Triggers the workflow on push or pull request events but only for the "main" branch
   workflow_dispatch:
 
 name: TerraformStart
@@ -7,25 +11,76 @@ env:
   STOP_VM : false
 
 jobs:
-  job_1:
+  Terraform:
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
     runs-on: ubuntu-latest
-    steps:
-      - name: 'simple task job_1'
-        run: |
-          echo "Hello world"
 
-      - name: Log in with Azure
-        uses: azure/login@v1
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+    
+    steps:
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v3
+  
+      - name: 'Terraform Format'
+        uses: hashicorp/terraform-github-actions@master
         with:
-          creds: '${{ secrets.AZURE_CREDENTIALS_2 }}'
-          enable-AzPSSession: true 
+          tf_actions_version: 1.2.5
+          tf_actions_subcommand: 'fmt'
+          tf_actions_working_dir: "./terraform"
+
+      - name: 'Terraform Init'
+        uses: hashicorp/terraform-github-actions@master
+        with:
+          tf_actions_version: 1.2.5
+          tf_actions_subcommand: 'init'
+          tf_actions_working_dir: "./terraform"
+  
+      - name: 'Terraform Validate'
+        uses: hashicorp/terraform-github-actions@master
+        with:
+          tf_actions_version: 1.2.5
+          tf_actions_subcommand: 'validate'
+          tf_actions_working_dir: "./terraform"
+
+      - name: 'Terraform Plan'
+        uses: hashicorp/terraform-github-actions@master
+        with:
+          tf_actions_version: 1.2.5
+          tf_actions_subcommand: 'plan'
+          tf_actions_working_dir: "./terraform"
+  
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main'
+        uses: hashicorp/terraform-github-actions@master
+        with:
+          tf_actions_version: 1.2.5
+          tf_actions_subcommand: 'apply'
+          tf_actions_working_dir: "./terraform"
       
   
   job_2:
     runs-on: ubuntu-latest
-    needs: [ job_1 ]
+    needs: [ Terraform ]
     steps:
       - name: 'simple task job_2'
         run: |
           echo "Hello world"
+        
+      #- name: Log in with Azure
+      #  uses: azure/login@v1
+      # with:
+      #    creds: '${{ secrets.AZURE_CREDENTIALS_2 }}'
+      #    enable-AzPSSession: true 
+      
+      #- name: 'Run Azure CLI commands'
+      #  run: |
+      #    az keyvault secret set --name "githubactions" --vault-name "keytest2020" --value '${{ secrets.AZURE_CREDENTIALS_2 }}'
       
