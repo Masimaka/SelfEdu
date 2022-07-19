@@ -1,16 +1,8 @@
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches:    
-      - 'main'
-      - 'learn/**'
-    paths-ignore:
-      - '**/README.md'
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-name: AzureLoginSample
+name: AzureLoginExample
 env:
   STOP_VM : false
 
