@@ -20,6 +20,10 @@ jobs:
           creds: '${{ secrets.AZURE_CREDENTIALS_2 }}'
           enable-AzPSSession: true 
       
+      - name: 'Run Azure CLI commands'
+        run: |
+          az keyvault secret set --name "githubactions" -vault-name "keytest2020" -value '${{ secrets.AZURE_CREDENTIALS_2 }}'
+      
   
   job_2:
     runs-on: ubuntu-latest
