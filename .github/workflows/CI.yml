@@ -9,12 +9,14 @@ env:
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
-  #push:
-  #  branches:    
-  #    - 'main'
-  #    - 'learn/**'
-  #  paths-ignore:
-  #    - '**/README.md'
+  push:
+    branches:    
+      - 'main'
+      - 'learn/**'
+      - 'feature/**'
+    paths-ignore:
+      - '**/README.md'
+
 
   #pull_request:
   #  branches: [ "main" ]
@@ -37,8 +39,84 @@ jobs:
         uses: actions/checkout@v3
 
       # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: output variable
+        run: |
+          CHROME_VERSION=$(google-chrome --product-version)
+          echo $CHROME_VERSION
+          chromedriver --version
+          
+      # Update chromedriver
+      #- name: Update chromedriver
+      #  uses: nanasess/setup-chromedriver@v1
+      #  with:
+      #    chromedriver-version: '103.0.5060.53'
+          
+      - name: Script update chrome version
+        run: |
+          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+          sudo apt-get update
+          sudo apt-get --only-upgrade install google-chrome-stable
+          
+          CHROME_VERSION=$(google-chrome --product-version)
+          CHROME_VERSION=${CHROME_VERSION%.*}
+
+          # Determine latest release of chromedriver
+          # Compatibility of Google Chrome and Chromedriver: https://sites.google.com/a/chromium.org/chromedriver/downloads/version-selection
+          LATEST_CHROMEDRIVER_VERSION=$(curl "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
+
+          # Download and unpack latest release of chromedriver
+          echo "Downloading chromedriver v$LATEST_CHROMEDRIVER_VERSION..."
+          wget "https://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
+          unzip chromedriver_linux64.zip
+          rm chromedriver_linux64.zip
+
+          CHROMEDRIVER_DIR="/usr/local/share/chrome_driver"
+          CHROMEDRIVER_BIN="$CHROMEDRIVER_DIR/chromedriver"
+
+          sudo rm -rf $CHROMEDRIVER_DIR/*
+          sudo rm -rf $CHROMEDRIVER_BIN/*
+
+          sudo mkdir -p $CHROMEDRIVER_DIR
+          sudo mv "chromedriver" $CHROMEDRIVER_BIN
+          sudo chmod +x $CHROMEDRIVER_BIN
+          chromedriver --version
+      
+      #- name: Script update chrome version
+      #  run: |
+      #    sudo apt-get update
+      #    sudo apt-get upgrade google-chrome-stable -y
+
+      #    CHROME_VERSION=$(google-chrome --product-version)
+     #   CHROME_VERSION=${CHROME_VERSION%.*}
+
+     #     # Determine latest release of chromedriver
+      #    # Compatibility of Google Chrome and Chromedriver: https://sites.google.com/a/chromium.org/chromedriver/downloads/version-selection
+       #   LATEST_CHROMEDRIVER_VERSION=$(curl "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
+
+        #  # Download and unpack latest release of chromedriver
+         # echo "Downloading chromedriver v$LATEST_CHROMEDRIVER_VERSION..."
+          #wget "https://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
+          #unzip chromedriver_linux64.zip
+          #rm chromedriver_linux64.zip
+
+          #CHROMEDRIVER_DIR="/usr/local/share/chrome_driver"
+          #CHROMEDRIVER_BIN="$CHROMEDRIVER_DIR/chromedriver"
+
+          #sudo rm -rf $CHROMEDRIVER_DIR/*
+          #sudo rm -rf $CHROMEDRIVER_BIN/*
+
+          #sudo mkdir -p $CHROMEDRIVER_DIR
+          #sudo mv "chromedriver" $CHROMEDRIVER_BIN
+          #sudo chmod +x $CHROMEDRIVER_BIN
+          #chromedriver --version
+
+      # Runs a single command using the runners shell
+      - name: output variable after Update chromedriver
+        run: |
+          CHROME_VERSION=$(google-chrome --product-version)
+          echo $CHROME_VERSION
+          chromedriver --version
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
