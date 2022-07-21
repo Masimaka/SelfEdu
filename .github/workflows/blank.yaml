@@ -1,0 +1,153 @@
+
+name: Build-Deploy(example)
+env:
+  APPLICATION_NAME : "MyApps"
+  PACKAGE_NAME     : "MyApps-ver-${{ github.sha }}"
+  
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  #push:
+  #  branches:    
+  #    - 'main'
+  #    - 'learn/**'
+  #    - 'feature/**'
+  #  paths-ignore:
+  #    - '**/README.md'
+
+
+  #pull_request:
+  #  branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    env: 
+      BUILD_VAR_1: "job level variable"
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # Runs a single command using the runners shell
+      - name: output variable
+        run: |
+          CHROME_VERSION=$(google-chrome --product-version)
+          echo $CHROME_VERSION
+          chromedriver --version
+          
+      # Update chromedriver
+      #- name: Update chromedriver
+      #  uses: nanasess/setup-chromedriver@v1
+      #  with:
+      #    chromedriver-version: '103.0.5060.53'
+          
+      - name: Script update chrome version
+        run: |
+          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+          sudo apt-get update
+          sudo apt-get --only-upgrade install google-chrome-stable
+          
+          CHROME_VERSION=$(google-chrome --product-version)
+          CHROME_VERSION=${CHROME_VERSION%.*}
+          # Determine latest release of chromedriver
+          # Compatibility of Google Chrome and Chromedriver: https://sites.google.com/a/chromium.org/chromedriver/downloads/version-selection
+          LATEST_CHROMEDRIVER_VERSION=$(curl "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
+          # Download and unpack latest release of chromedriver
+          echo "Downloading chromedriver v$LATEST_CHROMEDRIVER_VERSION..."
+          wget "https://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
+          unzip chromedriver_linux64.zip
+          rm chromedriver_linux64.zip
+          CHROMEDRIVER_DIR="/usr/local/share/chrome_driver"
+          CHROMEDRIVER_BIN="$CHROMEDRIVER_DIR/chromedriver"
+          sudo rm -rf $CHROMEDRIVER_DIR/*
+          sudo rm -rf $CHROMEDRIVER_BIN/*
+          sudo mkdir -p $CHROMEDRIVER_DIR
+          sudo mv "chromedriver" $CHROMEDRIVER_BIN
+          sudo chmod +x $CHROMEDRIVER_BIN
+          chromedriver --version
+      
+      #- name: Script update chrome version
+      #  run: |
+      #    sudo apt-get update
+      #    sudo apt-get upgrade google-chrome-stable -y
+
+      #    CHROME_VERSION=$(google-chrome --product-version)
+     #   CHROME_VERSION=${CHROME_VERSION%.*}
+
+     #     # Determine latest release of chromedriver
+      #    # Compatibility of Google Chrome and Chromedriver: https://sites.google.com/a/chromium.org/chromedriver/downloads/version-selection
+       #   LATEST_CHROMEDRIVER_VERSION=$(curl "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
+
+        #  # Download and unpack latest release of chromedriver
+         # echo "Downloading chromedriver v$LATEST_CHROMEDRIVER_VERSION..."
+          #wget "https://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
+          #unzip chromedriver_linux64.zip
+          #rm chromedriver_linux64.zip
+
+          #CHROMEDRIVER_DIR="/usr/local/share/chrome_driver"
+          #CHROMEDRIVER_BIN="$CHROMEDRIVER_DIR/chromedriver"
+
+          #sudo rm -rf $CHROMEDRIVER_DIR/*
+          #sudo rm -rf $CHROMEDRIVER_BIN/*
+
+          #sudo mkdir -p $CHROMEDRIVER_DIR
+          #sudo mv "chromedriver" $CHROMEDRIVER_BIN
+          #sudo chmod +x $CHROMEDRIVER_BIN
+          #chromedriver --version
+
+      # Runs a single command using the runners shell
+      - name: output variable after Update chromedriver
+        run: |
+          CHROME_VERSION=$(google-chrome --product-version)
+          echo $CHROME_VERSION
+          chromedriver --version
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
+      - name: Print variables
+        env: 
+          LOCAL_VAR: "Super local var"
+        run: |
+          echo "BUILD_VAR_1 is ${{ env.BUILD_VAR_1 }}" 
+          echo "BUILD_VAR_1 is $LOCAL_VAR" 
+          
+  my_deploy:
+    runs-on: ubuntu-20.04
+    needs: [ build ]
+    steps:
+      - name: List current folder befor Checkout
+        run : ls -la
+
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: List current folder after Checkout
+        run : ls -la
+
+      - name: Print Hello world
+        run : echo "Hello world from my_deploy"
+
+      - name: Print variables
+        run: |
+          echo "Application name is ${{ env.APPLICATION_NAME }}" 
+          echo "Package name is ${{ env.PACKAGE_NAME }}"
+      
+      - name: PowerShell
+        shell: pwsh
+        run: |
+          write-output "hello, line1"
+          write-output "hello, line2"
+          #Set-PSRepository PSGallery -InstallationPolicy Trusted
+          #Install-Module SqlServer, PSScriptAnalyzer
