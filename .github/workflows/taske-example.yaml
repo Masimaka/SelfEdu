@@ -1,0 +1,36 @@
+
+name: task3-example
+
+  
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  #push:
+  #  branches:    
+  #    - 'main'
+  #    - 'learn/**'
+  #    - 'feature/**'
+  #  paths-ignore:
+  #    - '**/README.md'
+
+
+  #pull_request:
+  #  branches: [ "main" ]
+
+
+  workflow_dispatch:
+
+
+jobs:
+
+  build:
+
+
+    runs-on: ubuntu-latest
+       
+      # Runs a single command using the runners shell
+      - name: output variable after Update chromedriver
+        run: |         
+          echo "task3"
+     
