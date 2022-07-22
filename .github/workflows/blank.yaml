@@ -13,6 +13,10 @@ on:
       perform_deploy:
         required: false
         type: boolean
+    secrets:
+      access-token:
+        description: 'A token passed from the caller workflow'
+        required: false
   workflow_call:
     inputs:
       build_id:
