@@ -11,6 +11,17 @@ on:
       perform_deploy:
         required: true
         type: boolean
+  workflow_call:
+    inputs:
+      build_id:
+        required: true
+        type: string
+      deploy_target:
+        required: true
+        type: string
+      perform_deploy:
+        required: true
+        type: boolean
 
 jobs:
   # This workflow contains a single job called "build"
