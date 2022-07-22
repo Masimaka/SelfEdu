@@ -1,0 +1,57 @@
+name: workflows_dispatch_call
+on:
+  workflow_dispatch:
+    inputs:
+      build_id:
+        description: 'Build id is string'
+        required: false
+        type: string
+      deploy_target:
+        required: false
+        type: string
+        default: targit_is_default
+      perform_deploy:
+        required: false
+        type: boolean
+    secrets:
+      access-token:
+        description: 'A token passed from the caller workflow'
+        required: false
+  workflow_call:
+    inputs:
+      build_id:
+        required: true
+        type: string
+      deploy_target:
+        required: true
+        type: string
+        default: targit_is_default
+      perform_deploy:
+        required: true
+        type: boolean
+    secrets:
+      access-token:
+        description: 'A token passed from the caller workflow'
+        required: false
+
+env:
+  NODE_VERSION       : "16.15.1"
+
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+     # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: |
+          echo "build_id is ${{ inputs.build_id }}"
+          echo "deploy_target is ${{ inputs.deploy_target }}"
+          echo "perform_deploy is ${{ inputs.perform_deploy }}"
+          echo "access-token is ${{ secrets.perform_deploy }}"
+          echo "NODE_VERSION is ${{ env.NODE_VERSION }}"
+
+
