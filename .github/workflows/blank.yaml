@@ -3,11 +3,13 @@ on:
   workflow_dispatch:
     inputs:
       build_id:
+        description: 'Build id is string'
         required: false
         type: string
       deploy_target:
         required: false
         type: string
+        default: targit_is_default
       perform_deploy:
         required: false
         type: boolean
@@ -19,6 +21,7 @@ on:
       deploy_target:
         required: true
         type: string
+        default: targit_is_default
       perform_deploy:
         required: true
         type: boolean
