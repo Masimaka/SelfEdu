@@ -1,0 +1,13 @@
+name: "workflow call example"
+on:
+  push:
+    branches:    
+      - 'feature/workflow_dispatch'
+
+jobs:
+  check-qa:
+    uses: ./.github/workflows/ci.yml
+    with:
+      build_id: build_from_call
+      deploy_target: target_from_call
+      perform_deploy: true
