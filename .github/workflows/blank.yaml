@@ -3,13 +3,13 @@ on:
   workflow_dispatch:
     inputs:
       build_id:
-        required: true
+        required: false
         type: string
       deploy_target:
-        required: true
+        required: false
         type: string
       perform_deploy:
-        required: true
+        required: false
         type: boolean
   workflow_call:
     inputs:
