@@ -5,8 +5,8 @@ on:
       - 'feature/workflow_dispatch'
 
 jobs:
-  check-qa:
-    uses: ./.github/workflows/blank.yaml
+  call:
+    uses: ./.github/workflows/workflows_dispatch_call.yaml
     with:
       build_id: build_from_call
       deploy_target: target_from_call
