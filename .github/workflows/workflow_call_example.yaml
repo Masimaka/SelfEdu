@@ -1,0 +1,15 @@
+name: "workflow call example"
+on:
+  push:
+    branches:    
+      - 'feature/workflow_dispatch'
+
+jobs:
+  call:
+    uses: ./.github/workflows/workflows_dispatch_call.yaml
+    with:
+      build_id: build_from_call
+      deploy_target: target_from_call
+      perform_deploy: true
+    secrets:
+      access-token: ${{ github.ref }}
