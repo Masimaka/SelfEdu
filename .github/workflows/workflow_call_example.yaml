@@ -6,7 +6,7 @@ on:
 
 jobs:
   check-qa:
-    uses: ./.github/workflows/ci.yml
+    uses: ./.github/workflows/blank.yml
     with:
       build_id: build_from_call
       deploy_target: target_from_call
