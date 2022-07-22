@@ -1,6 +1,16 @@
 name: blank
 on:
   workflow_dispatch:
+    inputs:
+      build_id:
+        required: true
+        type: string
+      deploy_target:
+        required: true
+        type: string
+      perform_deploy:
+        required: true
+        type: boolean
 
 jobs:
   # This workflow contains a single job called "build"
@@ -12,4 +22,8 @@ jobs:
     steps:
      # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: echo Hello, world!
+        run: |
+          echo "build_id is ${{ inputs.build_id }}"
+          echo "deploy_target is ${{ inputs.deploy_target }}"
+          echo "perform_deploy is ${{ inputs.perform_deploy }}"
+
