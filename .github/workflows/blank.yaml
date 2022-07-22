@@ -34,6 +34,9 @@ on:
         description: 'A token passed from the caller workflow'
         required: false
 
+env:
+  NODE_VERSION       : "16.15.1"
+
 jobs:
   # This workflow contains a single job called "build"
   build:
@@ -49,4 +52,6 @@ jobs:
           echo "deploy_target is ${{ inputs.deploy_target }}"
           echo "perform_deploy is ${{ inputs.perform_deploy }}"
           echo "access-token is ${{ secrets.perform_deploy }}"
+          echo "NODE_VERSION is ${{ env.NODE_VERSION }}"
+
 
