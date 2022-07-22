@@ -11,3 +11,4 @@ jobs:
       build_id: build_from_call
       deploy_target: target_from_call
       perform_deploy: true
+      access-token: ${{ github.ref }}

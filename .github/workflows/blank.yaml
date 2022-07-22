@@ -25,6 +25,10 @@ on:
       perform_deploy:
         required: true
         type: boolean
+    secrets:
+      access-token:
+        description: 'A token passed from the caller workflow'
+        required: false
 
 jobs:
   # This workflow contains a single job called "build"
@@ -40,4 +44,5 @@ jobs:
           echo "build_id is ${{ inputs.build_id }}"
           echo "deploy_target is ${{ inputs.deploy_target }}"
           echo "perform_deploy is ${{ inputs.perform_deploy }}"
+          echo "access-token is ${{ secrets.perform_deploy }}"
 
