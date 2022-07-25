@@ -1,0 +1,1 @@
+Пример деплоя терраформ файла main.tа. Workflow file - examples-terraform-1.yaml
