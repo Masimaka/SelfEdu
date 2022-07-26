@@ -35,7 +35,7 @@ jobs:
       #  env:
       #    GH_TOKEN: ${{ secrets.GH_PRIVATE_TOKEN }}
       - run: |
-          git config --global url."https://oauth2:${{ secrets.GH_PRIVATE_TOKEN }}".insteadOf "https://github.com"
+          git config --global url."https://oauth2:${{ secrets.GH_PRIVATE_TOKEN }}@github.com".insteadOf "https://github.com"
           git config --global -l
         #env:
         # GH_TOKEN: ${{ secrets.GH_PRIVATE_TOKEN }}
