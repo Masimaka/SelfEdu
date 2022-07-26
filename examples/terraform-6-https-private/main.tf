@@ -25,6 +25,5 @@ module "resource_group_example6" {
   resource_group_tags = {
     Environment = "stage"
     Team        = "DevOps"
-
   }
 }
