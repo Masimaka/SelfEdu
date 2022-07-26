@@ -37,7 +37,7 @@ jobs:
       - run: |
           #git config --local --remove-section http."https://github.com/"
           #git config --global url."https://Masimaka:${GH_TOKEN}@github.com/Masimaka".insteadOf "https://github.com/Masimaka"
-          git config --global url."https://git:${GH_TOKEN}@github.com/Masimaka".insteadOf "https://github.com/Masimaka"
+          git config --global url."https://oauth2:${GH_TOKEN}@github.com".insteadOf "https://github.com"
         env:
           GH_TOKEN: ${{ secrets.GH_PRIVATE_TOKEN }}
 
