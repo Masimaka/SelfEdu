@@ -19,7 +19,8 @@ provider "azurerm" {
 
 
 module "resource_group_example6" {
-  source              = "git::https://github.com/Masimaka/1//tfmodules/resource_group"
+  #source              = "git::https://github.com/Masimaka/1.git//tfmodules/resource_group"
+  source              = "git::https://github.com/Masimaka/tf-resource-group.git//tfmodules/resource_group"
   resource_group_name = "terraform-examle6"
   resource_group_tags = {
     Environment = "stage"
