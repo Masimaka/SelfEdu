@@ -35,10 +35,10 @@ jobs:
       #  env:
       #    GH_TOKEN: ${{ secrets.GH_PRIVATE_TOKEN }}
       - run: |
-          git config --global url."https://oauth2:${GH_TOKEN}".insteadOf "https://github.com"
+          git config --global url."https://oauth2:${{ secrets.GH_PRIVATE_TOKEN }}".insteadOf "https://github.com"
           git config --global -l
-        env:
-         GH_TOKEN: ${{ secrets.GH_PRIVATE_TOKEN }}
+        #env:
+        # GH_TOKEN: ${{ secrets.GH_PRIVATE_TOKEN }}
 
       - run: |
           git config --global -l
@@ -50,11 +50,9 @@ jobs:
       #    tf_actions_working_dir: "./terraform"
 
       - name: 'Terraform Init'
-        uses: hashicorp/terraform-github-actions@master
-        with:
-          tf_actions_version: 1.2.5
-          tf_actions_subcommand: 'init'
-          tf_actions_working_dir: "./examples/terraform-6-https-private"
+        working-directory: ./examples/terraform-6-https-private
+        run: |
+          terraform init
   
       - name: 'Terraform Validate'
         uses: hashicorp/terraform-github-actions@master
