@@ -3,7 +3,7 @@ terraform {
     resource_group_name  = "removelocked"
     storage_account_name = "adolearnlocker"
     container_name       = "selfedugit"
-    key                  = "terraform/github/examples/terraform-5-ssh.tfstate"
+    key                  = "terraform/github/examples/terraform-6-https-private.tfstate"
   }
 
   required_providers {
@@ -18,9 +18,9 @@ provider "azurerm" {
 }
 
 
-module "resource_group_example5" {
-  source              = "git@github.com:Masimaka/1//tfmodules/resource_group"
-  resource_group_name = "terraform-examle5"
+module "resource_group_example6" {
+  source              = "git::https://github.com/Masimaka/1//tfmodules/resource_group"
+  resource_group_name = "terraform-examle6"
   resource_group_tags = {
     Environment = "stage"
     Team        = "DevOps"
