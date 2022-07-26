@@ -39,6 +39,8 @@ jobs:
           git config --global -l
         #env:
         # GH_TOKEN: ${{ secrets.GH_PRIVATE_TOKEN }}
+      - run: |
+          git config --global -l
 
       #- name: 'Terraform Format'
       #  uses: hashicorp/terraform-github-actions@master
