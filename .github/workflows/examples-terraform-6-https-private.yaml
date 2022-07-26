@@ -23,8 +23,9 @@ jobs:
         uses: actions/checkout@v3
 
       - run: |
-          git config --local --remove-section http."https://github.com/"
-          git config --global url."https://Masimaka:${GH_TOKEN}@github.com/Masimaka".insteadOf "https://github.com/Masimaka"
+          #git config --local --remove-section http."https://github.com/"
+          #git config --global url."https://Masimaka:${GH_TOKEN}@github.com/Masimaka".insteadOf "https://github.com/Masimaka"
+          git config --global url."https://git:${{ GH_TOKEN }}@github.com/Masimaka".insteadOf "https://github.com/Masimaka"
         env:
           GH_TOKEN: ${{ secrets.GH_PRIVATE_TOKEN }}
 
